@@ -1,0 +1,1 @@
+for f in *.xyz ; do var=$((var + 1)) ; awk -F, '{$(NF+1)=0;}1' "$f" > $var ; done

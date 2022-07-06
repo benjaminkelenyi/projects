@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/rambo/pvcnn/depth-ir/build/devel/setup.sh

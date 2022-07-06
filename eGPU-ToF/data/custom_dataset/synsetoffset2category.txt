@@ -1,0 +1,4 @@
+Bag	bag
+Box	box
+Cylinder cylinder
+RobotFrame robotframe
