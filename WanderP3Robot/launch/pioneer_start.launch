@@ -1,0 +1,13 @@
+<launch>
+
+    <node pkg="sicktoolbox_wrapper" type="sicklms" name="sicklms" output="screen">
+        <param name="port" value="/dev/ttyUSB0" />
+        <param name="baud" value="38400" />
+        <param name="connect_delay" value="30" />
+    </node>
+    <node pkg="rosaria" type="RosAria" name="RosAria" output="screen">
+        <param name="port" value="/dev/ttyUSB1" />
+    </node>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="link1_broadcaster" args="0.16 0 0.16 0 0 0 1 base_link laser" />
+
+</launch> 

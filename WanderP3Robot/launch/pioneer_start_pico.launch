@@ -1,0 +1,30 @@
+<launch>
+    <arg name="camera_name" default="pico_zense"/>
+    <arg name="device_index" default="0"/>
+    <arg name="depth_confidence_threshold" default="30"/>
+    <arg name="depth_range" default="5.0"/>
+    <arg name="rgb_width" default="640"/>
+    <arg name="rgb_height" default="360"/>
+    <arg name="range_max" value="5.0" />
+    <node pkg="pico_zense_camera" type="pico_zense_camera" name="pico_zense_manager" output="screen" required="true">
+        <param name="camera_name" value="$(arg camera_name)" type="str"/>
+        <param name="device_index" value="$(arg device_index)" type="int"/>
+        <param name="depth_confidence_threshold" value="$(arg depth_confidence_threshold)" type="int"/>
+        <param name="depth_range" value="$(arg depth_range)" type="double"/>
+        <param name="rgb_width" value="$(arg rgb_width)" type="int"/>
+        <param name="rgb_height" value="$(arg rgb_height)" type="int"/>
+    </node>
+    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+        <remap from="camera_info" to="/pico_zense/depth/camera_info" />
+        <remap from="image" to="/pico_zense/depth/image_raw" />
+        <remap from="scan" to="/pico_scan" />
+        <param name="output_frame_id" value="pico_laser_frame" />
+        <param name="scan_height" value="10" />
+        <param name="range_max" value="$(arg range_max)" />
+    </node>
+    <node pkg="rosaria" type="RosAria" name="RosAria" output="screen">
+        <param name="port" value="/dev/ttyUSB0" />
+    </node>
+    <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0.5 -1.5708 0 -1.5708 base_link pico_zense_depth_frame 20" />
+    <node pkg="tf" type="static_transform_publisher" name="link2_broadcaster" args="0 0 0 0 -1.5708 1.5708 pico_zense_depth_frame pico_laser_frame 20" />
+</launch> 
