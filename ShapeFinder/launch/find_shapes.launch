@@ -1,0 +1,7 @@
+
+<launch>
+    <node pkg="shape_finder" type="shape_finder_node" name="shape_finder_node" output="screen" >
+    <remap from="point_cloud_in" to="/k4a/point_cloud/point_cloud_depth_to_depth"/>
+    <remap from="imu_data" to="filtered_imu"/>
+    </node>
+</launch>
